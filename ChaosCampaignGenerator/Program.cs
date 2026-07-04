@@ -15,10 +15,11 @@ var trackGenerator = new TrackGenerator(new Dice());
 List<Contract> contracts = [];
 for (int i = 0; i < input; i++)
 {
-    Contract contract = contractGenerator.GenerateContract();
-    Contract opposingContract = contractGenerator.GenerateOpposingContract(contract);
+    Contract contract = contractGenerator.GenerateContract(2);
+    Contract opposingContract = contractGenerator.GenerateOpposingContract(contract, 2);
     contract.OpposingContract = opposingContract;
     trackGenerator.GenerateTracks(contract);
+    opposingContract?.Tracks.AddRange(contract.Tracks);
 
     contracts.Add(contract);
 }

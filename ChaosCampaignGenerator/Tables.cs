@@ -113,24 +113,24 @@ public static class Tables
             {1, "Grassland #1 (BB)"},
             {2, "Grassland #2 (AGOAC)"},
             {3, "Grassland #3 (AGOAC)"},
-            {4, "Desert #1 (BB)"},
-            {5, "Open Terrain #2 (MP: Grasslands)"},
-            {6, "Open Terrain #3 (MP: Grasslands)"}
+            {4, "Woodland (MP: Grassland)"},
+            {5, "Open Terrain #2 (MP: Grassland)"},
+            {6, "Open Terrain #3 (MP: Grassland)"}
         };
 
         public static Dictionary<int, string> Hills => new()
         {
             {1, "Hilltops #1 (CI)"},
-            {2, "Hilltops #2 (CI)"},
-            {3, "Rolling Hills #1 (MP: Grasslands)"},
-            {4, "Rolling Hills #2 (MP: Grasslands, CI)"},
-            {5, "Rolling Hills #3 (MP: Grasslands)"},
-            {6, "Rolling HIlls #4 (MP: Grasslands)"}
+            {2, "Foothills #2 (MP: Grassland)"},
+            {3, "Rolling Hills #1 (MP: Grassland)"},
+            {4, "Rolling Hills #2 (CI)"},
+            {5, "Rolling Hills #3 (MP: Grassland)"},
+            {6, "Rolling HIlls #4 (MP: Grassland)"}
         };
 
         public static Dictionary<int, string> LightUrban => new()
         {
-            {1, "River CommCenter (MP: Grasslands)"},
+            {1, "River CommCenter (MP: Grassland)"},
             {2, "Park District (MP: City)"},
             {3, "Central Park (MP: City)"},
             {4, "AeroBase #1 (MP: Deserts)"},
@@ -140,8 +140,8 @@ public static class Tables
 
         public static Dictionary<int, string> Mountains => new()
         {
-            {1, "Foothills #1 (MP: Grasslands)"},
-            {2, "Foothills #2 (MP: Grasslands)"},
+            {1, "Foothills #1 (MP: Grassland)"},
+            {2, "Foothills #2 (MP: Grassland)"},
             {3, "Washout #1 (MP: Deserts)"},
             {4, "Washout #2 (MP: Deserts)"},
             {5, "Mines #1 (MP: Deserts)"},
@@ -170,22 +170,22 @@ public static class Tables
 
         public static Dictionary<int, string> Wetlands => new()
         {
-            {1, "Streams (MP: Grasslands)"},
+            {1, "Streams (MP: Grassland)"},
             {2, "Wide River (MP: Savannahs)"},
-            {3, "Lakes (MP: Grasslands)"},
-            {4, "Grasslands #2 (AGOAC)"},
+            {3, "Lakes (MP: Grassland)"},
+            {4, "Grassland #2 (AGOAC)"},
             {5, "Oasis (MP: Deserts)"},
-            {6, "Open Terrain #3 (MP: Grasslands)"}
+            {6, "Open Terrain #3 (MP: Grassland)"}
         };
 
         public static Dictionary<int, string> Wooded => new()
         {
-            {1, "Woodland (MP: Grasslands)"},
-            {2, "Scattered Woods (MP: Grasslands)"},
+            {1, "Woodland (Mercenaries)"},
+            {2, "Scattered Woods (Mercenaries)"},
             {3, "Grassland #3 (AGOAC)"},
-            {4, "Rolling Hills #2 (MP: Grasslands, CI)"},
+            {4, "Rolling Hills #2 (CI)"},
             {5, "Desert #3 (AGOAC)"},
-            {6, "Rolling Hills #1 (MP: Grasslands)"}
+            {6, "Rolling Hills #1 (MP: Grassland)"}
         };
     }
 }
