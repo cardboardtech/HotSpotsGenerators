@@ -24,6 +24,8 @@ public class ContractWriter
                 WriteContract(contract.OpposingContract);
             }
 
+            WriteTracks(contract);
+
             Console.WriteLine();
             contractNumber++;
         }
@@ -33,9 +35,24 @@ public class ContractWriter
         //Local Function
         void WriteContract(Contract contract)
         {
-            string contractTermsString = GetContractTermsString(contract);
-            Console.WriteLine(contractTermsString);
+            string contractString = GetContractString(contract);
+            Console.WriteLine(contractString);
+            Console.WriteLine();
 
+            var termsNumber = 1;
+            foreach (var terms in contract.Terms)
+            {
+                Console.WriteLine($"Contract Terms #{termsNumber}");
+                string contractTermsString = GetContractTermsString(terms);
+                Console.WriteLine(contractTermsString);
+                Console.WriteLine();
+
+                termsNumber++;
+            }
+        }
+
+        void WriteTracks(Contract contract)
+        {
             if (contract.Tracks.Count > 0)
             {
                 PirateHunt? pirateHunt = contract as PirateHunt;
@@ -60,20 +77,26 @@ public class ContractWriter
         }
     }
 
-    private static string GetContractTermsString(Contract contract)
+    private static string GetContractString(Contract contract)
     {
         string contractString =
-$@"Employer: {contract.Employer}
-Type of Action: {contract}
+$@"Type of Action: {contract}
 Length of Contract: {contract.Length} months
 Location (Primary Terrain): {contract.Terrain}
-Intensity (Number of Tracks): {contract.Tracks.Count}
+Intensity (Number of Tracks): {contract.Tracks.Count}";
 
-Base Pay: {Tables.ContractTermsTable.BasePaySteps[contract.BasePay]} ({contract.BasePay})
-Support: {Tables.ContractTermsTable.SupportRightsSteps[contract.SupportRights]} ({contract.SupportRights})
-Transportation: {Tables.ContractTermsTable.TransportationTermsSteps[contract.TransportationTerms]} ({contract.TransportationTerms})
-Salvage Rights: {Tables.ContractTermsTable.SalvageRightsSteps[contract.SalvageRights]} ({contract.SalvageRights})
-Command Rights: {Tables.ContractTermsTable.CommandRightsSteps[contract.CommandRights]} ({contract.CommandRights})";
+        return contractString;
+    }
+
+    private static string GetContractTermsString(ContractTerms terms)
+    {
+        string contractString =
+$@"Employer: {terms.Employer}
+Base Pay: {Tables.ContractTermsTable.BasePaySteps[terms.BasePay]} ({terms.BasePay})
+Support: {Tables.ContractTermsTable.SupportRightsSteps[terms.SupportRights]} ({terms.SupportRights})
+Transportation: {Tables.ContractTermsTable.TransportationTermsSteps[terms.TransportationTerms]} ({terms.TransportationTerms})
+Salvage Rights: {Tables.ContractTermsTable.SalvageRightsSteps[terms.SalvageRights]} ({terms.SalvageRights})
+Command Rights: {Tables.ContractTermsTable.CommandRightsSteps[terms.CommandRights]} ({terms.CommandRights})";
 
         return contractString;
     }

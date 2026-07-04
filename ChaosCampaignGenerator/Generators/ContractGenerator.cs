@@ -12,22 +12,28 @@ public class ContractGenerator
         _dice = dice;
     }
 
-    public Contract GenerateContract()
+    public Contract GenerateContract(int numberOfTerms = 1)
     {
         Contract contract = GetContractType();
 
-        PopulateContract(contract);
+        for (int i = 0; i < numberOfTerms; i++)
+        {
+            PopulateContract(contract);
+        }
 
         contract.Terrain = GetTerrain();
 
         return contract;
     }
 
-    public Contract GenerateOpposingContract(Contract primaryContract)
+    public Contract GenerateOpposingContract(Contract primaryContract, int numberOfTerms = 1)
     {
         Contract contract = GetOpposingContractType(primaryContract);
 
-        PopulateContract(contract);
+        for (int i = 0; i < numberOfTerms; i++)
+        {
+            PopulateContract(contract);
+        }
 
         contract.Length = primaryContract.Length;
         contract.Terrain = primaryContract.Terrain;
@@ -37,14 +43,18 @@ public class ContractGenerator
 
     private void PopulateContract(Contract contract)
     {
+        var terms = new ContractTerms();
+
         Employer employer = GetEmployer();
 
-        contract.Employer = employer;
-        contract.BasePay = GetBasePay(contract.BasePayModifier, employer.BasePayModifier);
-        contract.CommandRights = GetCommandRights(contract.CommandRightsModifier, employer.CommandRightsModifier);
-        contract.SalvageRights = GetSalvageRights(contract.SalvageRightsModifier, employer.SalvageRightsModifier);
-        contract.SupportRights = GetSupportRights(contract.SupportRightsModifier, employer.SupportRightsModifier);
-        contract.TransportationTerms = GetTransportationTerms(contract.TransportationTermsModifier, employer.TransportationTermsModifier);
+        terms.Employer = employer;
+        terms.BasePay = GetBasePay(contract.BasePayModifier, employer.BasePayModifier);
+        terms.CommandRights = GetCommandRights(contract.CommandRightsModifier, employer.CommandRightsModifier);
+        terms.SalvageRights = GetSalvageRights(contract.SalvageRightsModifier, employer.SalvageRightsModifier);
+        terms.SupportRights = GetSupportRights(contract.SupportRightsModifier, employer.SupportRightsModifier);
+        terms.TransportationTerms = GetTransportationTerms(contract.TransportationTermsModifier, employer.TransportationTermsModifier);
+
+        contract.Terms.Add(terms);
     }
 
     private Contract GetContractType()
