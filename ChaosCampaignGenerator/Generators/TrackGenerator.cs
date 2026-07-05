@@ -13,37 +13,63 @@ public class TrackGenerator
 
     public void GenerateTracks(Contract contract)
     {
-        int numberOfTracks = GetNumberOfTracks();
+        int intensity = GetIntensity();
 
-        for (int i = 0; i < numberOfTracks; i++)
+        if (intensity == 0)
         {
-            Track track = contract switch
+            if (contract is Garrison
+                && contract.OpposingContract != null)
             {
-                Raid => CreateRaidTrack(),
-                Expedition => CreateExpeditionTrack(),
-                Garrison => CreateGarrisonTrack(),
-                Invasion => CreateInvasionTrack(),
-                _ => throw new Exception()
-            };
-            track.Month = SetMonth();
-            track.Mapsheets.AddRange(SetMapsheets());
-            contract.Tracks.Add(track);
+                GenerateTracks(contract.OpposingContract);
+            }
+
+            return;
         }
 
-        if (contract is PirateHunt pirateHunt)
+        int[] monthlyTracks = GetMonthlyTracks();
+        for (int month = 1; month <= contract.Length; month++)
         {
-            GeneratePirateHuntRaidTracks(pirateHunt);
-        }
+            for (int i = 1; i <= monthlyTracks[month - 1]; i++)
+            {
+                Track track = contract switch
+                {
+                    Raid => CreateRaidTrack(),
+                    Expedition => CreateExpeditionTrack(),
+                    Garrison => CreateGarrisonTrack(),
+                    Invasion => CreateInvasionTrack(),
+                    _ => throw new Exception("Invalid Contract Type")
+                };
+                track.Month = month;
 
-        if (numberOfTracks == 0
-            && contract is Garrison
-            && contract.OpposingContract != null)
-        {
-            GenerateTracks(contract.OpposingContract);
+                if (i < monthlyTracks[month - 1])
+                {
+                    track.RepairTime = _dice.Roll(2) switch
+                    {
+                        <= 2 => RepairTime.Hasty,
+                        >= 3 and <= 9 => RepairTime.Standard,
+                        >= 10 and <= 11 => RepairTime.Extended,
+                        >= 12 => RepairTime.Full
+                    };
+                }
+
+                track.Mapsheets.AddRange(SetMapsheets());
+                contract.Tracks.Add(track);
+
+                //generate alternate Raid tracks for Pirate Hunts
+                if (contract is PirateHunt pirateHunt && contract.Tracks.Count > 1)
+                {
+                    Track raidTrack = CreateRaidTrack();
+                    raidTrack.Month = track.Month;
+                    raidTrack.RepairTime = track.RepairTime;
+                    raidTrack.Mapsheets.AddRange(SetMapsheets());
+
+                    pirateHunt.RaidTracks.Add(raidTrack);
+                }
+            }
         }
 
         //Local Functions
-        int GetNumberOfTracks()
+        int GetIntensity()
         {
             int roll = _dice.Roll(2);
             return contract switch
@@ -75,24 +101,114 @@ public class TrackGenerator
             };
         }
 
-        void GeneratePirateHuntRaidTracks(PirateHunt pirateHunt)
+        int[] GetMonthlyTracks()
         {
-            for (int i = 0; i < numberOfTracks - 1; i++)
-            {
-                Track track = CreateRaidTrack();
-                pirateHunt.RaidTracks.Add(track);
-            }
-        }
+            int roll = _dice.Roll();
 
-        int SetMonth()
-        {
-            int month = _dice.Roll(maxValue: contract.Length);
-            if (contract.Tracks.Count(x => x.Month == month) >= 3)
+            if (contract.Length == 3)
             {
-                return SetMonth();
+                switch (intensity)
+                {
+                    case 1:
+                        return roll switch
+                        {
+                            <= 3 => [0, 1, 0],
+                            4 or 5 => [0, 0, 1],
+                            >= 6 => [1, 0, 0]
+                        };
+                    case 2:
+                        return roll switch
+                        {
+                            <= 3 => [0, 1, 1],
+                            4 => [1, 0, 1],
+                            5 => [0, 2, 0],
+                            >= 6 => [0, 2, 0]
+                        };
+                    case 3:
+                        return roll switch
+                        {
+                            <= 1 => [0, 1, 2],
+                            2 or 3 => [1, 1, 1],
+                            4 => [0, 2, 1],
+                            5 => [2, 0, 1],
+                            >= 6 => [2, 1, 0]
+                        };
+                    default:
+                        return [0, 0, 0];
+                }
             }
-
-            return month;
+            else if (contract.Length == 6)
+            {
+                switch (intensity)
+                {
+                    case 1:
+                        return roll switch
+                        {
+                            <= 1 => [0, 0, 1, 0, 0, 0],
+                            2 => [0, 0, 0, 0, 1, 0],
+                            3 => [0, 1, 0, 0, 0, 0],
+                            4 => [1, 0, 0, 0, 0, 0],
+                            5 => [0, 0, 0, 0, 0, 1],
+                            >= 6 => [0, 0, 0, 1, 0, 0]
+                        };
+                    case 2:
+                        return roll switch
+                        {
+                            <= 1 => [0, 1, 0, 1, 0, 0],
+                            2 => [0, 0, 1, 0, 1, 0],
+                            3 => [0, 0, 1, 0, 0, 1],
+                            4 => [0, 1, 1, 0, 0, 0],
+                            5 => [0, 0, 0, 1, 1, 0],
+                            >= 6 => [0, 0, 2, 0, 0, 0]
+                        };
+                    case 3:
+                        return roll switch
+                        {
+                            <= 1 => [0, 1, 0, 1, 0, 1],
+                            2 => [0, 1, 0, 1, 1, 0],
+                            3 => [0, 1, 1, 1, 0, 0],
+                            4 => [0, 0, 0, 1, 1, 1],
+                            5 => [0, 2, 0, 1, 0, 0],
+                            >= 6 => [0, 0, 0, 2, 1, 0]
+                        };
+                    case 4:
+                        return roll switch
+                        {
+                            <= 1 => [0, 1, 0, 1, 1, 1],
+                            2 => [0, 1, 1, 1, 1, 0],
+                            3 => [0, 0, 1, 1, 1, 1],
+                            4 => [0, 2, 0, 1, 0, 1],
+                            5 => [0, 0, 2, 0, 1, 1],
+                            >= 6 => [0, 2, 1, 0, 1, 0]
+                        };
+                    case 5:
+                        return roll switch
+                        {
+                            <= 1 => [0, 1, 1, 1, 1, 1],
+                            2 => [0, 1, 1, 1, 0, 2],
+                            3 => [0, 2, 0, 2, 0, 1],
+                            4 => [0, 2, 1, 0, 1, 1],
+                            5 => [0, 2, 2, 1, 0, 0],
+                            >= 6 => [0, 0, 0, 2, 2, 1]
+                        };
+                    case 6:
+                        return roll switch
+                        {
+                            <= 1 => [1, 1, 1, 1, 1, 1],
+                            2 => [0, 2, 1, 1, 1, 1],
+                            3 => [0, 0, 2, 1, 1, 2],
+                            4 => [0, 1, 1, 2, 1, 1],
+                            5 => [0, 1, 1, 2, 0, 2],
+                            >= 6 => [0, 1, 2, 2, 1, 0]
+                        };
+                    default:
+                        return [0, 0, 0, 0, 0, 0];
+                }
+            }
+            else
+            {
+                throw new ArgumentException($"Only supports Contract Lengths of 3 or 6 months. Input Length was {contract.Length}");
+            }
         }
 
         IEnumerable<int> SetMapsheets()
@@ -100,8 +216,9 @@ public class TrackGenerator
             List<int> maps = [1, 2, 3, 4, 5, 6];
             List<int> results = [];
 
+            int numberOfMaps = contract.Scale > 2 ? 4 : contract.Scale;
             var random = new Random();
-            for (int i = 0; i < contract.Scale; i++)
+            for (int i = 0; i < numberOfMaps; i++)
             {
                 int sheet = random.Next(maps.Count - 1);
                 results.Add(maps[sheet]);
@@ -112,7 +229,7 @@ public class TrackGenerator
         }
     }
 
-    public Track CreateRaidTrack()
+    private Track CreateRaidTrack()
     {
         int attackerRoll = _dice.Roll();
         var track = new Track
@@ -132,7 +249,7 @@ public class TrackGenerator
         return track;
     }
 
-    public Track CreateExpeditionTrack()
+    private Track CreateExpeditionTrack()
     {
         var track = new Track
         {
@@ -153,7 +270,7 @@ public class TrackGenerator
         return track;
     }
 
-    public Track CreateGarrisonTrack()
+    private Track CreateGarrisonTrack()
     {
         int attackerRoll = _dice.Roll();
         var track = new Track
@@ -173,7 +290,7 @@ public class TrackGenerator
         return track;
     }
 
-    public Track CreateInvasionTrack()
+    private Track CreateInvasionTrack()
     {
         int attackerRoll = _dice.Roll();
         var track = new Track

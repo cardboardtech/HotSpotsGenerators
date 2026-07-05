@@ -12,30 +12,26 @@ public class ContractGenerator
         _dice = dice;
     }
 
-    public Contract GenerateContract(int numberOfTerms = 1)
+    public Contract GenerateContract(int scale)
     {
         Contract contract = GetContractType();
 
-        for (int i = 0; i < numberOfTerms; i++)
-        {
-            PopulateContract(contract);
-        }
+        PopulateContract(contract);
 
+        contract.Scale = scale;
         contract.Terrain = GetTerrain();
 
         return contract;
     }
 
-    public Contract GenerateOpposingContract(Contract primaryContract, int numberOfTerms = 1)
+    public Contract GenerateOpposingContract(Contract primaryContract)
     {
         Contract contract = GetOpposingContractType(primaryContract);
 
-        for (int i = 0; i < numberOfTerms; i++)
-        {
-            PopulateContract(contract);
-        }
+        PopulateContract(contract);
 
         contract.Length = primaryContract.Length;
+        contract.Scale = primaryContract.Scale;
         contract.Terrain = primaryContract.Terrain;
 
         return contract;
@@ -43,18 +39,14 @@ public class ContractGenerator
 
     private void PopulateContract(Contract contract)
     {
-        var terms = new ContractTerms();
-
         Employer employer = GetEmployer();
 
-        terms.Employer = employer;
-        terms.BasePay = GetBasePay(contract.BasePayModifier, employer.BasePayModifier);
-        terms.CommandRights = GetCommandRights(contract.CommandRightsModifier, employer.CommandRightsModifier);
-        terms.SalvageRights = GetSalvageRights(contract.SalvageRightsModifier, employer.SalvageRightsModifier);
-        terms.SupportRights = GetSupportRights(contract.SupportRightsModifier, employer.SupportRightsModifier);
-        terms.TransportationTerms = GetTransportationTerms(contract.TransportationTermsModifier, employer.TransportationTermsModifier);
-
-        contract.Terms.Add(terms);
+        contract.Employer = employer;
+        contract.BasePay = GetBasePay(contract.BasePayModifier, employer.BasePayModifier);
+        contract.CommandRights = GetCommandRights(contract.CommandRightsModifier, employer.CommandRightsModifier);
+        contract.SalvageRights = GetSalvageRights(contract.SalvageRightsModifier, employer.SalvageRightsModifier);
+        contract.SupportRights = GetSupportRights(contract.SupportRightsModifier, employer.SupportRightsModifier);
+        contract.TransportationTerms = GetTransportationTerms(contract.TransportationTermsModifier, employer.TransportationTermsModifier);
     }
 
     private Contract GetContractType()
@@ -255,7 +247,7 @@ public class ContractGenerator
         {
             2 => TerrainType.Desert,
             3 => TerrainType.Wetlands,
-            4 => TerrainType.LightUrban,
+            4 => TerrainType.LightIndustrial,
             5 => TerrainType.Hills,
             6 => TerrainType.Wooded,
             7 => TerrainType.Grasslands,

@@ -6,6 +6,14 @@ public enum AttackerDefender
     Opposition
 }
 
+public enum RepairTime
+{
+    Hasty,
+    Standard,
+    Extended,
+    Full
+}
+
 public enum TrackType
 {
     Assault,
@@ -27,7 +35,7 @@ public enum TerrainType
     Desert,
     Grasslands,
     Hills,
-    LightUrban,
+    LightIndustrial,
     Mountains,
     Savannahs,
     Urban,
