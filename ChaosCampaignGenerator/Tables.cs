@@ -16,9 +16,13 @@ public static class Tables
             {8, "110%"},
             {9, "120%"},
             {10, "130%"},
-            {11, "150%"},
-            {12, "175%"},
-            {13, "200%"}
+            {11, "140%"},
+            {12, "150%"},
+            {13, "160%"},
+            {14, "170%"},
+            {15, "180%"},
+            {16, "190%"},
+            {17, "200%"}
         };
 
         public static Dictionary<int, string> CommandRightsSteps => new()
@@ -51,15 +55,17 @@ public static class Tables
             {2, "Straight/20%"},
             {3, "Straight/40%"},
             {4, "Straight/60%"},
-            {5, "Straight/80%"},
-            {6, "Straight/100%"},
-            {7, "Battle/10%"},
-            {8, "Battle/20%"},
-            {9, "Battle/30%"},
-            {10, "Battle/40%"},
-            {11, "Battle/50%"},
-            {12, "Battle/75%"},
-            {13,"Battle/100%"}
+            {5, "Straight/70%"},
+            {6, "Straight/80%"},
+            {7, "Straight/90%"},
+            {8, "Straight/100%"},
+            {9, "Battle/10%"},
+            {10, "Battle/20%"},
+            {11, "Battle/30%"},
+            {12, "Battle/40%"},
+            {13, "Battle/50%"},
+            {14, "Battle/75%"},
+            {15, "Battle/100%"}
         };
 
         public static Dictionary<int, string> TransportationTermsSteps => new()
@@ -80,7 +86,7 @@ public static class Tables
             { TerrainType.Desert, Desert },
             { TerrainType.Grasslands, Grasslands },
             { TerrainType.Hills, Hills },
-            { TerrainType.LightUrban, LightUrban },
+            { TerrainType.LightIndustrial, LightIndustrial },
             { TerrainType.Mountains, Mountains },
             { TerrainType.Savannahs, Savannahs },
             { TerrainType.Urban, Urban },
@@ -128,7 +134,7 @@ public static class Tables
             {6, "Rolling HIlls #4 (MP: Grassland)"}
         };
 
-        public static Dictionary<int, string> LightUrban => new()
+        public static Dictionary<int, string> LightIndustrial => new()
         {
             {1, "River CommCenter (MP: Grassland)"},
             {2, "Park District (MP: City)"},
@@ -174,8 +180,8 @@ public static class Tables
             {2, "Wide River (MP: Savannahs)"},
             {3, "Lakes (MP: Grassland)"},
             {4, "Grassland #2 (AGOAC)"},
-            {5, "Oasis (MP: Deserts)"},
-            {6, "Open Terrain #3 (MP: Grassland)"}
+            {5, "Lake Area (Mercenaries)"},
+            {6, "River Valley (Mercenaries)"}
         };
 
         public static Dictionary<int, string> Wooded => new()

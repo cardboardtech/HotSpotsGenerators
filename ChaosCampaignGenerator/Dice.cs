@@ -9,7 +9,7 @@ public class Dice
         _random = new Random();
     }
 
-    public int Roll(int numberOfDice = 1, int maxValue = 6)
+    public int Roll(int numberOfDice = 1, int maxValue = 6, int modifier = 0)
     {
         int result = 0;
         for (int i = 0; i < numberOfDice; i++)
@@ -17,6 +17,6 @@ public class Dice
             result += _random.Next(1, maxValue);
         }
 
-        return result;
+        return result + modifier;
     }
 }
