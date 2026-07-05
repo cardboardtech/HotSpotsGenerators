@@ -1,4 +1,4 @@
-namespace ChaosCampaignGenerator.Employers;
+namespace HotSpotsGenerator.Employers;
 
 public abstract class Employer
 {

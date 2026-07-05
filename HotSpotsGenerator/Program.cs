@@ -1,6 +1,6 @@
-﻿using ChaosCampaignGenerator;
-using ChaosCampaignGenerator.Contracts;
-using ChaosCampaignGenerator.Generators;
+﻿using HotSpotsGenerator;
+using HotSpotsGenerator.Contracts;
+using HotSpotsGenerator.Generators;
 
 int numberOfContracts;
 int scale;

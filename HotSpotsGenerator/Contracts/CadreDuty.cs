@@ -1,4 +1,4 @@
-namespace ChaosCampaignGenerator.Contracts;
+namespace HotSpotsGenerator.Contracts;
 
 public class CadreDuty : Garrison
 {

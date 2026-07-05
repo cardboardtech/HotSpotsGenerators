@@ -1,4 +1,4 @@
-namespace ChaosCampaignGenerator;
+namespace HotSpotsGenerator;
 
 public enum AttackerDefender
 {

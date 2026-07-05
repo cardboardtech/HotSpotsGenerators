@@ -1,7 +1,7 @@
-using ChaosCampaignGenerator.Contracts;
-using ChaosCampaignGenerator.Employers;
+using HotSpotsGenerator.Contracts;
+using HotSpotsGenerator.Employers;
 
-namespace ChaosCampaignGenerator.Generators;
+namespace HotSpotsGenerator.Generators;
 
 public class ContractGenerator
 {

@@ -1,6 +1,6 @@
-using ChaosCampaignGenerator.Contracts;
+using HotSpotsGenerator.Contracts;
 
-namespace ChaosCampaignGenerator.Generators;
+namespace HotSpotsGenerator.Generators;
 
 public class TrackGenerator
 {

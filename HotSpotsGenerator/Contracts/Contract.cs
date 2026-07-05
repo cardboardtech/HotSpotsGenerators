@@ -1,6 +1,6 @@
-using ChaosCampaignGenerator.Employers;
+using HotSpotsGenerator.Employers;
 
-namespace ChaosCampaignGenerator.Contracts;
+namespace HotSpotsGenerator.Contracts;
 
 public abstract class Contract
 {

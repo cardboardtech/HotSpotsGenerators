@@ -1,6 +1,6 @@
-using ChaosCampaignGenerator.Contracts;
+using HotSpotsGenerator.Contracts;
 
-namespace ChaosCampaignGenerator;
+namespace HotSpotsGenerator;
 
 public class ContractWriter
 {
