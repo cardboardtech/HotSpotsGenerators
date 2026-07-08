@@ -2,14 +2,9 @@ using HotSpotsGenerator.Contracts;
 
 namespace HotSpotsGenerator.Generators;
 
-public class TrackGenerator
+public class TrackGenerator(Dice dice)
 {
-    private readonly Dice _dice;
-
-    public TrackGenerator(Dice dice)
-    {
-        _dice = dice;
-    }
+    private readonly Dice _dice = dice;
 
     public void GenerateTracks(Contract contract)
     {
@@ -216,7 +211,13 @@ public class TrackGenerator
             List<int> maps = [1, 2, 3, 4, 5, 6];
             List<int> results = [];
 
-            int numberOfMaps = contract.Scale > 2 ? 4 : contract.Scale;
+            int numberOfMaps = contract.Scale switch
+            {
+                1 => 1,
+                2 or 3 => 2,
+                >= 4 => 4
+            };
+
             var random = new Random();
             for (int i = 0; i < numberOfMaps; i++)
             {

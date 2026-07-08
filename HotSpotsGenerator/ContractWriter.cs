@@ -2,11 +2,11 @@ using HotSpotsGenerator.Contracts;
 
 namespace HotSpotsGenerator;
 
-public class ContractWriter
+public static class ContractWriter
 {
     private const string _trackFormat = "{0, -5} {1,-18} {2, -12} {3, -12} {4, -11} {5}";
 
-    public void WriteToConsole(List<Contract> contracts)
+    public static void WriteToConsole(List<Contract> contracts)
     {
         int contractNumber = 1;
         foreach (Contract contract in contracts)
