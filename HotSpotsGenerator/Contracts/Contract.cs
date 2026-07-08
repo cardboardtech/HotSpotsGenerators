@@ -6,7 +6,7 @@ public abstract class Contract
 {
     public int Scale { get; set; }
     public int Length { get; set; }
-    public Employer Employer { get; set; }
+    public Employer Employer { get; set; } = new Self();
     public int BasePay { get; set; }
     public int CommandRights { get; set; }
     public int SalvageRights { get; set; }
@@ -19,13 +19,7 @@ public abstract class Contract
     public virtual int TransportationTermsModifier { get; }
     public TerrainType Terrain { get; set; }
     public Contract? OpposingContract { get; set; }
-    public List<Track> Tracks { get; }
-
-    public Contract()
-    {
-        Employer = new Self();
-        Tracks = [];
-    }
+    public List<Track> Tracks { get; } = [];
 
     public override string ToString() => GetType().Name;
 }

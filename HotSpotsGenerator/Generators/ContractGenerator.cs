@@ -3,14 +3,9 @@ using HotSpotsGenerator.Employers;
 
 namespace HotSpotsGenerator.Generators;
 
-public class ContractGenerator
+public class ContractGenerator(Dice dice)
 {
-    private readonly Dice _dice;
-
-    public ContractGenerator(Dice dice)
-    {
-        _dice = dice;
-    }
+    private readonly Dice _dice = dice;
 
     public Contract GenerateContract(int scale)
     {
